@@ -85,7 +85,7 @@
                     <div class="card-footer">
                         <div class="text-center">
                             <button class="btn btn-primary btn-sm rounded-0" type="submit" form="schedule-form"><i class="fa fa-save"></i> Save</button>
-                            <button class="btn btn-default border btn-sm rounded-0" type="reset" form="schedule-form"><i class="fa fa-reset"></i> Cancel</button>
+                            <button class="btn btn-default border btn-sm rounded-0" type="reset" form="schedule-form"><i class="fa fa-reset"></i> Cancel</button>                           
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,8 @@
                     <div class="text-end">
                         <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
                         <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
-                        <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button> 
+                        <!---AGREGAR A CLASE---><input name="anotarse" type="submit" value="QUIERO ANOTARME A ESTA CLASE">
                     </div>
                 </div>
             </div>
@@ -133,7 +134,16 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
     $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));
     $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
     $sched_res[$row['id']] = $row;
+    
+    $myId = intval($row['id']);
+    $consulta = "INSERT INTO CLASES ( id ) VALUES ( $myId )";
+    $RTDO= mysqli_query($conn , $consulta);
+    if(! $RTDO){echo"ERROR 138"; EXIT;}
 }
+
+/*if (isset($_POST['anotarse'])){
+    echo "<script>alert('Listo, ya estas anotado!');</script>";
+}*/ 
 ?>
 <?php 
 if(isset($conn)) $conn->close();
